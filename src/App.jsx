@@ -4,11 +4,14 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
 import { useState } from 'react'
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 function App() {
   const [account, setAccount] = useState({});
 
-  return (
+  return (<>
+    <Header />
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -23,6 +26,8 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
+    <Footer />
+  </>
   )
 }
 

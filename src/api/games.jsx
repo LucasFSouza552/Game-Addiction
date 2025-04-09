@@ -1,4 +1,3 @@
-// src/api/games.js
 import api from "./apiConfig";
 
 export const getGames = async () => {
