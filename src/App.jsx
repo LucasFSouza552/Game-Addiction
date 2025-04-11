@@ -8,13 +8,17 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 
 function App() {
-  const [account, setAccount] = useState({});
+  const [account, setAccount] = useState({
+    username: "Teste",
+    email: "teste@gmail.com",
+    favoriteGames: []
+  });
 
   return (<>
     <Header />
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home account={account} />} />
         <Route path="/login" element={<Login setAccount={setAccount} />} />
         <Route path="/register" element={<Register />} />
         <Route

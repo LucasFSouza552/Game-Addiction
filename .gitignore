@@ -4,6 +4,64 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+<<<<<<< Updated upstream
+pnpm-debug.log*
+=======
+<<<<<<< HEAD
+>>>>>>> Stashed changes
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+<<<<<<< Updated upstream
+=======
+# Gatsby files
+.cache/
+# Comment in the public line in if your project uses Gatsby and not Next.js
+# https://nextjs.org/blog/next-9-1#public-directory-support
+# public
+
+# vuepress build output
+.vuepress/dist
+
+# vuepress v2.x temp and cache directory
+.temp
+.cache
+
+# vitepress build output
+**/.vitepress/dist
+
+# vitepress cache directory
+**/.vitepress/cache
+
+# Docusaurus cache and generated files
+.docusaurus
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+=======
 pnpm-debug.log*
 lerna-debug.log*
 
@@ -12,6 +70,7 @@ dist
 dist-ssr
 *.local
 
+>>>>>>> Stashed changes
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +81,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+<<<<<<< Updated upstream
+=======
+>>>>>>> 52a7350 (Iniciando Projeto - GameAddiction)
+>>>>>>> Stashed changes
