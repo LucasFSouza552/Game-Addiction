@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useState } from 'react'
 
+import styled from 'styled-components'
+
 // Estilo Global
 import './App.css'
 
@@ -16,7 +18,7 @@ import Favorites from './pages/Favorites'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   const [account, setAccount] = useState({
     username: "Teste",
     email: "teste@gmail.com",
@@ -25,7 +27,7 @@ function App() {
     favoriteGames: []
   });
 
-  return (<>
+  return (<Background>
     <BrowserRouter>
       <Header setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
       <Routes>
@@ -44,9 +46,23 @@ function App() {
       </Routes>
       <Footer />
     </BrowserRouter>
-  </>
+  </Background>
   )
 }
 
 export default App
 
+const Background = ({ children }) => {
+  return (
+    <BackgroundStyle>
+      {children}
+    </BackgroundStyle>
+  )
+}
+
+const BackgroundStyle = styled.div`
+  background-image: url('./images/bg-page.png');
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+`;

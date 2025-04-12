@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styled from 'styled-components';
 
 const SearchBar = ({ searchTerm, setSearchTerm }) => {
     const navigate = useNavigate();
@@ -16,11 +17,30 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
 
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={searchTerm} onChange={handleSearch} placeholder="Pesquisar" />
+        <FormStyle onSubmit={handleSubmit}>
+            <SearchInput type="text" value={searchTerm} onChange={handleSearch} placeholder="Pesquisar" />
             <button type="submit">Buscar</button>
-        </form>
+        </FormStyle>
     )
 }
 
 export default SearchBar;
+
+const FormStyle = styled.form`
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+`;
+
+const SearchInput = styled.input`
+    padding: 1rem 15rem 1rem 15rem;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 5px;
+    border: None;
+    background-color: #3333333e;
+
+    &::placeholder{
+        color: #ffffff;
+    }
+`;

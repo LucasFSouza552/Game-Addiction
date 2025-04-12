@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { FaYoutube } from "react-icons/fa";
 
 function Footer() {
   return (
@@ -28,18 +31,18 @@ function Footer() {
 
       <Socials>
         <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
-          <SocialIcon src="/INSTAGRAM.png" alt="Instagram" />
+          <FaInstagram />
         </a>
         <a href="https://x.com/home" target="_blank" rel="noopener noreferrer">
-          <SocialIcon src="TWITTER.png" alt="Twitter" />
+          <FaXTwitter />
         </a>
         <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
-          <SocialIcon src="YOUTUBE.png" alt="YouTube" />
+          <FaYoutube />
         </a>
       </Socials>
 
       <Copyright>
-        <p>&copy; 2023 FAMINAS - Faculdade de Minas | Todos os direitos reservados.</p>
+        <p>&copy; {new Date().getFullYear()} FAMINAS - Faculdade de Minas | Todos os direitos reservados.</p>
       </Copyright>
     </FooterWrapper>
   );
@@ -53,7 +56,7 @@ const FooterWrapper = styled.footer`
   align-items: center;
   padding: 25px;
   gap: 20px;
-  background-color: #7A29E4;
+  background-color: #eeeeee45;
 `;
 
 const Container = styled.div`
@@ -66,22 +69,27 @@ const Col = styled.div`
 `;
 
 const Title = styled.h6`
-
+  font-family: "Satoshi-Bold";
+  font-size: 20px;
 `;
 
 const List = styled.ul`
-
+  list-style: None;
 `;
 
 const ListItem = styled.li`
-
+  font-family: "Satoshi-Regular";
 `;
 
 const Description = styled.p`
-
+  font-family: "Satoshi-Regular";
 `;
 
 const Socials = styled.div`
+  flex-direction: row;
+  font-size: 25px;
+  gap: 15px;
+  margin-top: 30px;
 `;
 
 const SocialIcon = styled.img`
@@ -89,5 +97,5 @@ const SocialIcon = styled.img`
 `;
 
 const Copyright = styled.div`
-
+  font-size: 10px;
 `;

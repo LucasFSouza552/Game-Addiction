@@ -10,40 +10,37 @@ export default function Header({ searchTerm, setSearchTerm }) {
   return (
     <HeaderWrapper>
       <HeaderContainer>
-        <Logo src="/IMG/logo_site.png" alt="Logo do Site" />
+        <Logo src="#" alt="Logo do Site" />
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <GroupingInfos>
           <Nav>
             <Link to="/">Início</Link>
-            <Link to="/games">Loja</Link>
           </Nav>
           <AuthLinks>
-            <Link href="#" className="entrar">Entrar</Link>
-            <Link href="#" className="criar_conta">Criar Conta</Link>
+            <Link to="#">Entrar</Link>
+            <Link to="#">Criar Conta</Link>
           </AuthLinks>
           <MdOutlineFavoriteBorder onClick={() => { navigate('/favorites') }} />
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </GroupingInfos>
       </HeaderContainer>
     </HeaderWrapper>
   );
 }
 
-
 const HeaderWrapper = styled.header`
-  background-color: #7A29E4;
+  background-color: #eeeeee45;
 `;
 
 const GroupingInfos = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 30px;
-  justify-content: space-between;
+  gap: 15px;
 `;
 
 const HeaderContainer = styled.div`
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 8vh;
   padding: 15px;
 `;
