@@ -41,19 +41,24 @@ export const getGames = async (params = {}) => {
  * @param {string} params.search - Nome ou parte do nome do jogo.
  * @returns {Promise<Array>} - Uma promessa que resolve para uma lista de jogos.
  */
-export const searchGames = async (searchOption) => {
+export const searchGames = async (searchOption, limit = 0) => {
+  const params = {
+    search: searchOption,
+  };
+
+  if (limit > 0) {
+    params.limit = limit;
+  }
+
   try {
-    const response = await api.get("", {
-      params: {
-        search: searchOption
-      }
-    });
+    const response = await api.get("", { params }); // <- Aqui está a correção
     return response.data.products;
   } catch (error) {
     console.error("Erro ao buscar jogos:", error);
     return [];
   }
-}
+};
+
 
 export const getGameById = async (id) => {
   try {

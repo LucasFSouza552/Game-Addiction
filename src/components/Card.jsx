@@ -22,10 +22,10 @@ const Card = ({ game, isFavorite, onToggleFavorite }) => {
             <span>{game.title}</span>
             <h4>{gameSymbol} {basePrice || 0.00}</h4>
             {game.isDiscounted && <h3>{gameSymbol} {discountPrice || 0.00}</h3>}
-            <div onClick={onToggleFavorite}>
+            {onToggleFavorite && <div onClick={onToggleFavorite}>
                 {isFavorite ? < MdOutlineFavorite /> : < MdOutlineFavoriteBorder />}
                 {isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-            </div>
+            </div>}
             <div>
                 {game.genres.map((genre) => {
                     return (

@@ -2,28 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchBar from './SearchBar';
 import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header({ searchTerm, setSearchTerm }) {
   const navigate = useNavigate();
+
   return (
     <HeaderWrapper>
       <HeaderContainer>
         <Logo src="/IMG/logo_site.png" alt="Logo do Site" />
         <GroupingInfos>
           <Nav>
-            <a href="/HTML/HOME/index.html" className="active">Início</a>
-            <a href="/HTML/LOJA/loja.html">Loja</a>
+            <Link to="/">Início</Link>
+            <Link to="/games">Loja</Link>
           </Nav>
           <AuthLinks>
-            <a href="#" className="entrar">Entrar</a>
-            <a href="#" className="criar_conta">Criar Conta</a>
+            <Link href="#" className="entrar">Entrar</Link>
+            <Link href="#" className="criar_conta">Criar Conta</Link>
           </AuthLinks>
           <MdOutlineFavoriteBorder onClick={() => { navigate('/favorites') }} />
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </GroupingInfos>
-        </HeaderContainer>
-      </HeaderWrapper>
+      </HeaderContainer>
+    </HeaderWrapper>
   );
 }
 

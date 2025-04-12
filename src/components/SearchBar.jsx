@@ -10,6 +10,7 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if (searchTerm === '') return;
         navigate(`/games`);
     };
 

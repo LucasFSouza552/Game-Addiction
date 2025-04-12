@@ -1,17 +1,22 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useState } from 'react'
+
+// Estilo Global
+import './App.css'
+
+// Pages
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Profile from './pages/Profile'
-import { useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import './App.css'
-import Search from './pages/Search'
+import Games from './pages/Games'
 import Favorites from './pages/Favorites'
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
+  
   const [account, setAccount] = useState({
     username: "Teste",
     email: "teste@gmail.com",
@@ -33,11 +38,10 @@ function App() {
             account ? <Profile /> : <Navigate to="/login" replace />
           }
         />
-        <Route path="/games" element={<Search account={account} setAccount={setAccount} search={searchTerm} />} />
-        {/* <Route path="/favorites" element={<Favorites account={account} setAccount={setAccount} />} /> */}
+        <Route path="/games" element={<Games account={account} setAccount={setAccount} search={searchTerm} />} />
+        <Route path="/favorites" element={<Favorites account={account} setAccount={setAccount} />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-      <Footer />
       <Footer />
     </BrowserRouter>
   </>
