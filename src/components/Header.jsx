@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import SearchBar from './SearchBar';
+import { MdOutlineFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
-export default function Header() {
+export default function Header({ searchTerm, setSearchTerm }) {
+  const navigate = useNavigate();
   return (
     <>
       <HeaderWrapper>
@@ -15,6 +19,9 @@ export default function Header() {
             <a href="#" className="entrar">Entrar</a>
             <a href="#" className="criar_conta">Criar Conta</a>
           </AuthLinks>
+          <MdOutlineFavoriteBorder onClick={() => { navigate('/favorites') }} />
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
         </HeaderContainer>
       </HeaderWrapper>
     </>
