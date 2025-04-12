@@ -6,6 +6,7 @@ import Profile from './pages/Profile'
 import { useState } from 'react'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import './App.css'
 import Search from './pages/Search'
 import Favorites from './pages/Favorites'
 
@@ -36,6 +37,7 @@ function App() {
         {/* <Route path="/favorites" element={<Favorites account={account} setAccount={setAccount} />} /> */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <Footer />
       <Footer />
     </BrowserRouter>
   </>

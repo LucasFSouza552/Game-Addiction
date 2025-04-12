@@ -7,9 +7,9 @@ export default function Home({ account, setAccount }) {
 
 
   return (
-    <div>
+    <HomePage>
       Home Page
       {<GameList account={account} setAccount={setAccount} />}
-    </div>
+    </HomePage>
   )
 }
