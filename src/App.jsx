@@ -33,7 +33,7 @@ function App() {
           }
         />
         <Route path="/games" element={<Search account={account} setAccount={setAccount} search={searchTerm} />} />
-        <Route path="/favorites" element={<Favorites account={account} setAccount={setAccount} />} />
+        {/* <Route path="/favorites" element={<Favorites account={account} setAccount={setAccount} />} /> */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Footer />
