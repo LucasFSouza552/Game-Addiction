@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
+import { FaSearch } from "react-icons/fa";
 
 const SearchBar = ({ searchTerm, setSearchTerm }) => {
     const navigate = useNavigate();
@@ -12,14 +13,14 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (searchTerm === '') return;
-        navigate(`/games`);
+        navigate(`/`);
     };
 
 
     return (
         <FormStyle onSubmit={handleSubmit}>
             <SearchInput type="text" value={searchTerm} onChange={handleSearch} placeholder="Pesquisar" />
-            <button type="submit">Buscar</button>
+            <ButtonStyle type="submit"><FaSearch /></ButtonStyle>
         </FormStyle>
     )
 }
@@ -42,5 +43,15 @@ const SearchInput = styled.input`
 
     &::placeholder{
         color: #ffffff;
+        font-family: "Satoshi-Light"
     }
+`;
+
+const ButtonStyle = styled.button`
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+    border: None;
+    border-radius: 10px;
+    background-color: #3333333e;
 `;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaYoutube } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -13,8 +14,8 @@ function Footer() {
           <List>
             <ListItem>Av. Cristiano Ferreira Varella, 655 - Bom Pastor</ListItem>
             <ListItem>Muriaé - MG, CEP: 36880-000</ListItem>
-            <ListItem className="contato">
-              <a href="mailto:contato@faminas.edu.br">contato@faminas.edu.br</a>
+            <ListItem>
+              <Link to="mailto:contato@faminas.edu.br">contato@faminas.edu.br</Link>
             </ListItem>
           </List>
         </Col>
@@ -70,6 +71,7 @@ const Col = styled.div`
 
 const Title = styled.h6`
   font-family: "Satoshi-Bold";
+  color: white;
   font-size: 20px;
 `;
 
@@ -79,6 +81,25 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   font-family: "Satoshi-Regular";
+  color: #ffff;
+  
+  a {
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+
+    color: #DEDE1C;
+  }
+  a:visited {
+    color: #BEF71B;
+  }
+  a:active {
+    color: #DEDE1C;
+  }
+  a:hover {
+    color: #BEF71B;
+    font-family: "Satoshi-Bold";
+    transform: scale(1.2);
+  }
 `;
 
 const Description = styled.p`
@@ -90,6 +111,18 @@ const Socials = styled.div`
   font-size: 25px;
   gap: 15px;
   margin-top: 30px;
+  a {
+    color: white;
+  }
+  a:active {
+    color: #DEDE1C;
+  }
+  a:hover {
+    color: #BEF71B;
+    font-family: "Satoshi-Bold";
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out;
+  }
 `;
 
 const SocialIcon = styled.img`
