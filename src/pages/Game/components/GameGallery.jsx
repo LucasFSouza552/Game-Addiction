@@ -38,14 +38,14 @@ const GameGallery = ({ game, picture, setPicture }) => {
                     e.target.style.display = "none";
                 }}
             />
-        ));
+        )) || [];
 
     useEffect(() => {
         if (game && game.video === null && game.video.id === null) return
         const videoId = getYouTubeVideoID(`https://www.youtube.com/watch?v=${game.video?.id}`);
         setVideoId(videoId);
     }, [game.video])
-
+    console.log(game);
     return (
         <GalleryWrapper id="galeria">
             {game.video &&
@@ -59,7 +59,7 @@ const GameGallery = ({ game, picture, setPicture }) => {
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>}
-            <Title>Galeria</Title>
+            {Gallery.length > 0 && <Title>Galeria</Title>}
             <GalleryContainer>
                 {Gallery}
             </GalleryContainer>

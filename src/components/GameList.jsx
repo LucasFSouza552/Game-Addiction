@@ -31,6 +31,7 @@ const GameList = ({ account, setAccount, search, gamesList }) => {
                             key={game.id + "-" + index}
                             isFavorite={account?.favoriteGames?.includes(`${game.title}`)}
                             onToggleFavorite={(e) => toggleFavorite(e, game.title)}
+                            showFavoriteButton={account}
                         />
                     );
                 })}
@@ -48,19 +49,20 @@ const GameListStyle = styled.ul`
     justify-items: center;
     align-items: center;
 
+    width: 100%;
     margin: 50px 20px;
 
     transition: all 0.3s ease;
 
-    @media (max-width: 500px) {
+    @media (max-width: 768px) {
         grid-template-columns: repeat(1, minmax(150px, 1fr));
         gap: 20px 10px;
     }
     
-    @media (min-width: 501px) and (max-width: 768px) {
+    /* @media (min-width: 501px) and (max-width: 768px) {
         grid-template-columns: repeat(2, minmax(150px, 1fr));
         gap: 20px 10px;
-    }
+    } */
     
     @media (min-width: 769px) and (max-width: 1024px) {
         gap: 20px 10px;

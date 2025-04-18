@@ -26,19 +26,18 @@ const FavoriteIcon = styled(MdOutlineFavorite)`
             }
             50% {
                 transform: scale(1.6);
-            }
         }
     `}
 `;
 
-const Card = ({ game, isFavorite, onToggleFavorite }) => {
+const Card = ({ game, isFavorite, onToggleFavorite, showFavoriteButton = true }) => {
     const navigate = useNavigate();
     if (!game) return null;
 
     return (
         <CardWrapper key={game.id} title={game.title} onClick={() => navigate(`/game?title=${game.title}`)}>
-            <CardImage src={"http://" + game.boxImage + '.png'} alt={game.title} />
-            {onToggleFavorite && <FavoriteButton title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"} onClick={onToggleFavorite}>
+            <CardImage src={"http://" + game.boxImage + ".png"} alt={game.title} />
+            {onToggleFavorite && showFavoriteButton&& <FavoriteButton title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"} onClick={onToggleFavorite}>
                 < FavoriteIcon isFavorite={isFavorite} />
             </FavoriteButton>}
             <BgCardDetails>

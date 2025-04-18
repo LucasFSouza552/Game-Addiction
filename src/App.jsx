@@ -91,4 +91,5 @@ const BackgroundStyle = styled.div`
   min-height: 100dvh;
   display: flex;
   justify-content: space-between;
+  overflow-x: hidden;
 `;

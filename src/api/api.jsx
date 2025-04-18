@@ -2,16 +2,11 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "https://www.gog.com/games/ajax/filtered",
-  headers: { "Content-Type": "application/json" }
+  headers: {
+    "Content-Type": "application/json"
+  }
 });
 
-
-// search	megamagic	Nome ou parte do nome do jogo
-// page	1	Página da busca
-// sort	popularity	Ordenação (popularity, new, price)
-// system	windows	Sistema operacional (windows, mac, linux)
-// price	discounted ou free	Filtrar por jogos com desconto ou gratuitos
-// genre	action, rpg, etc	Gênero do jogo
 /**
  * Busca uma lista de jogos da API da GOG com base nos parâmetros fornecidos.
  * 
@@ -148,6 +143,29 @@ export const searchGames = async (search, limit = 0) => {
   }
 };
 
+export const searchByTitle = async (title) => {
+  const params = {
+    search: title,
+    mediaType: "game",
+    page: 1,
+    pageSize: 10,
+  };
+
+  try {
+    const { data } = await api.get("", { params });
+    const allGames = data.products || [];
+
+    const matched = allGames.find(
+      (game) => game.title.toLowerCase() === title.toLowerCase()
+    );
+
+    return matched;
+  } catch (error) {
+    console.error(`Erro ao buscar o jogo "${title}":`, error);
+    return null;
+  }
+}
+
 export const searchFavoriteGames = async (favorites) => {
   const results = [];
 
@@ -157,7 +175,7 @@ export const searchFavoriteGames = async (favorites) => {
         search: title,
         mediaType: "game",
         page: 1,
-        pageSize: 10,
+        limit: 10,
       };
 
       const { data } = await api.get("", { params });
@@ -178,6 +196,3 @@ export const searchFavoriteGames = async (favorites) => {
 
   return results;
 };
-
-// Api DISCARTADA!
-// baseURL: "https://www.cheapshark.com/api/1.0"

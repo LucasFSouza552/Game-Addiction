@@ -48,6 +48,7 @@ export default function Home({ account, setAccount, search, gamesList, setGamesL
 
   return (
     <HomePage>
+
       {<GameList account={account} setAccount={setAccount} search={search} gamesList={gamesList} />}
       {<ShowMoreStyle onClick={showMore}> {isLoading ? "Carregando..." : "Carregar Mais"} </ShowMoreStyle>}
     </HomePage>
@@ -70,9 +71,14 @@ const ShowMoreStyle = styled.button`
 `;
 
 
-const HomePage = styled.div`
+const HomePage = styled.section`
   display: flex;
+  width: 100%;
+  max-width: 100%;
   min-height: 100%;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 0px 15px;
 `;  

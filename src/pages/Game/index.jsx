@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { searchGames } from "../../api/api";
+import { searchByTitle, searchGames } from "../../api/api";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import GameViewer from "./components/GameViewer";
@@ -28,15 +28,17 @@ export default function Game() {
     const query = useQuery();
     const gametitle = query.get("title");
 
+    console.log(gametitle);
+
     useEffect(() => {
         if (!gametitle) return;
 
         const searchGame = async () => {
             try {
-                console.log("Procurar Jogo ", gametitle);
-                const foundGames = await searchGames(gametitle, 1);
-                if (foundGames.length > 0) {
-                    setGame(foundGames[0]);
+                const foundGames = await searchByTitle(gametitle);
+                console.log(foundGames)
+                if (foundGames) {
+                    setGame(foundGames);
                 } else {
                     console.warn("Nenhum jogo encontrado com o título:", gametitle);
                 }
@@ -49,13 +51,11 @@ export default function Game() {
     }, [gametitle]);
     try {
         return (
-            <section id="game">
-                <GameContainer>
-                    <BackButton size={40} onClick={() => window.history.back()} />
-                    <GameViewer game={game} />
-                    <GameGallery game={game} picture={picture} setPicture={setPicture} />
-                </GameContainer>
-            </section>
+            <GameContainer>
+                <BackButton size={40} onClick={() => window.history.back()} />
+                <GameViewer game={game} />
+                <GameGallery game={game} picture={picture} setPicture={setPicture} />
+            </GameContainer>
         );
 
     } catch (error) {
@@ -64,11 +64,14 @@ export default function Game() {
     }
 }
 
-const GameContainer = styled.div`
+
+
+const GameContainer = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 50px;
-    margin: 50px;
+    margin: 10px 0px;
+    width: 100%;
 `;

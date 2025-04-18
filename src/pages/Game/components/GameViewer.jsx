@@ -13,43 +13,43 @@ import { FaCheck, FaTimes } from "react-icons/fa";
  */
 const GameViewer = ({ game }) => {
     return (
-            <GameWrapper>
-                {game.image && <GameThumbnail src={`http://${game.image}.png`} alt={game.title} />}
-                <GameDetails>
+        <GameWrapper>
+            {game.image && <GameThumbnail src={`http://${game.image}.png`} alt={game.title} />}
+            <GameDetails>
 
-                    <GameTitle>{game.title}</GameTitle>
+                <GameTitle>{game.title}</GameTitle>
 
-                    <LabelAndDescription inline label="Desenvolvedor" description={game.developer} />
-                    <LabelAndDescription inline label="Publicadora" description={game.publisher} />
-                    <LabelAndDescription inline label="Plataforma" description={
-                        game.worksOn ? (
-                            <List inline>
-                                {Object.entries(game.worksOn).map(([key, value]) => (
-                                    <GenresTag key={key}>{value ? <FaCheck size={20} color="green" /> : <FaTimes size={20} color="red" />} {key}</GenresTag>
-                                ))}
-                            </List>
-                        ) : null
-                    } />
+                <LabelAndDescription inline label="Desenvolvedor" description={game.developer} />
+                <LabelAndDescription inline label="Publicadora" description={game.publisher} />
+                <LabelAndDescription inline label="Plataforma" description={
+                    game.worksOn ? (
+                        <List inline>
+                            {Object.entries(game.worksOn).map(([key, value]) => (
+                                <GenresTag key={key}>{value ? <FaCheck size={20} color="green" /> : <FaTimes size={20} color="red" />} {key}</GenresTag>
+                            ))}
+                        </List>
+                    ) : null
+                } />
 
-                    <LabelAndDescription inline label="Gêneros" description={(<List inline>{game.genres?.filter((genre) => genre).map((genre, index) => {
-                        return (
-                            <GenresTag bgColor={genre} color="black" key={genre}>{genre}</GenresTag>
-                        )
-                    })}</List>)} />
+                <LabelAndDescription inline label="Gêneros" description={(<List inline>{game.genres?.filter((genre) => genre).map((genre, index) => {
+                    return (
+                        <GenresTag bgColor={genre} color="black" key={genre}>{genre}</GenresTag>
+                    )
+                })}</List>)} />
 
-                    <PriceComponent game={game} />
+                <PriceComponent game={game} />
 
-                </GameDetails>
-            </GameWrapper>
+            </GameDetails>
+        </GameWrapper>
     )
 }
 
 const PriceComponent = ({ game }) => {
-    const discount = game.price?.discountPercentage || 0;
-    const oldPrice = game.price?.baseAmount;
-    const newPrice = game.price?.finalAmount;
+    const discount = game.price?.discountPercentage;
+    const oldPrice = game.price?.baseAmount || '0.00';
+    const newPrice = game.price?.finalAmount || '0.00';
     const currencySymbol = game.price?.symbol || 'R$';
-
+    
     return (
         <PriceContainer>
             {discount > 0 ? (
@@ -70,6 +70,18 @@ const PriceComponent = ({ game }) => {
         </PriceContainer>
     );
 };
+
+
+const LabelAndDescription = ({ label, description }) => {
+    return (
+        <InfoContainer>
+            <LabelInfo>{label}</LabelInfo>
+
+            {description}
+        </InfoContainer>
+    )
+}
+
 
 const PriceContainer = styled.div`
     background: linear-gradient(to right, rgba(0, 255, 136, 0.1), rgba(96, 239, 255, 0.1));
@@ -124,8 +136,10 @@ const DiscountBadge = styled.span`
     font-family: 'satoshi-bold';
 `;
 
-const InfoContainer = styled.div`
 
+const InfoContainer = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
 
 const LabelInfo = styled.h4`
@@ -204,19 +218,6 @@ const GameThumbnail = styled.img`
     width: auto;
     height: auto;
     object-fit: contain;
-
 `;
-
-const LabelAndDescription = ({ label, description }) => {
-    return (
-        <InfoContainer>
-            <LabelInfo>{label}</LabelInfo>
-
-            <div>
-                {description}
-            </div>
-        </InfoContainer>
-    )
-}
 
 export default GameViewer;
