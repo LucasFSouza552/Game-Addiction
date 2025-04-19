@@ -1,96 +1,90 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 export default function Login() {
   return (
     <LoginContainer>
-      <Form action="">
+      <LoginBox>
+        <h2>Entrar</h2>
 
-        <div>
-          <h1>Entrar</h1>
+        <label htmlFor="email">E-mail</label>
+        <Input type="email" id="email" placeholder="Digite seu e-mail" />
 
-          <InputFieldContainer label="E-mail:" type="email" placeholder={"Digite seu e-mail"} />
+        <label htmlFor="senha">Senha</label>
+        <Input type="password" id="senha" placeholder="Digite sua senha" />
 
-          <InputFieldContainer label="Senha:" type="password" placeholder={"Digite sua senha"} />
+        <Button>Entrar</Button>
 
-        </div>
-
-      </Form>
-
-      <div>
-        <img src="#" alt="imagem representatativa" />
-      </div>
+        <RegisterText>
+          Não tem uma conta? <Link to="/register">Cadastre-se</Link>
+        </RegisterText>
+      </LoginBox>
     </LoginContainer>
-  )
+  );
 }
 
-
-const InputFieldContainer = ({ label, type, placeholder }) => {
-  return (<InputContainer>
-    <StyledLabel htmlFor={type}>{label}</StyledLabel>
-    <StyledInput type={type} name={type} id={type} placeholder={placeholder} />
-  </InputContainer>)
-}
-
-const StyledLabel = styled.label`
-    color: white;
-    font-family: "Satoshi-Bold";
-    position: relative;
-    background-color: #8E24E9;
-    top: 13px;
-    left: 10px;
-    width: max-content;
-    padding: 0px 10px;
-`;
-
-const StyledInput = styled.input`
-    background-color: transparent;
-    border: solid 1px white;
-    border-radius: 10px;
-    padding: 15px;
-    color: white;
-    width: 100%;
-    font-family: "Satoshi-Bold"; 
-
-    &::placeholder{
-        color: white;
-        font-family: "Satoshi-Light"
-    }
-
-    &:focus {
-        outline: none;
-    }
-
-`;
-
-const InputContainer = styled.div`
-  position: relative;
-`;
-
-
-
-
-const LoginContainer = styled.section`
+const LoginContainer = styled.div`
+  font-family: "Satoshi-Bold";
+  min-height: 70vh;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 50px;
-  margin: 10px 0px;
-  width: 100%;
-  color: white;
 `;
 
-const Form = styled.form`
-  border: solid 1px white;
-  border-radius: 10px;
-  margin: 0px;
-  padding: 10% 10%;
-
-  gap: 30px;
+const LoginBox = styled.div`
+  background-color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  gap: 15px;
+  width: 100%;
+  max-width: 400px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  label {
+    font-weight: bold;
+    margin-top: 10px;
+  }
 `;
 
+const Input = styled.input`
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+`;
+
+const Button = styled.button`
+  margin-top: 15px;
+  padding: 12px;
+  background-color: #7A29E4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #A4DB06;
+  }
+`;
+
+const RegisterText = styled.div`
+  text-align: center;
+  font-size: 0.9rem;
+
+  a {
+    color: #4B0082;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+`;
