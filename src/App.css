@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Satoshi-Regular';
+
+    --primaryColor: #7A29E4;
+    --secondaryColor: #DEDE1C;
+    --tertiaryColor: #BEF71B;
 }
 
 div {

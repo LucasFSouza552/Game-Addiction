@@ -13,7 +13,6 @@ const SearchBar = ({ searchTerm, setSearchTerm, isMobileView }) => {
   };
 
   const handleSubmit = (event) => {
-    console.log("submit");
     event.preventDefault();
     if (!searchTerm.trim()) return;
     navigate("/");
@@ -127,7 +126,7 @@ const SearchButton = styled.button`
   color: white;
   border: none;
   border-radius: 10px;
-  padding: 0px 20px;
+  padding: 20px 20px;
   position: relative;
   margin-left: 10px;
   cursor: pointer;

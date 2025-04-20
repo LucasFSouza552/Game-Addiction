@@ -16,6 +16,17 @@ import Footer from './components/Footer'
 import Favorites from './pages/Favorites'
 import Game from './pages/Game'
 
+const Accounts = [
+  {
+    username: "Teste",
+    senha: "123456",
+    email: "teste@gmail.com",
+    gender: "Masculino",
+    bornDate: "01/01/2000",
+    favoriteGames: []
+  }
+]
+
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [gamesList, setGamesList] = useState([]);
@@ -60,6 +71,10 @@ function App() {
             element={<Favorites account={account} setAccount={setAccount} gameList={gamesList} search={searchTerm} />}
           />
           <Route
+            path="/profile"
+            element={<Profile account={account} setAccount={setAccount} />}
+          />
+          <Route
             path="/game"
             element={<Game />}
           />
@@ -92,4 +107,5 @@ const BackgroundStyle = styled.div`
   display: flex;
   justify-content: space-between;
   overflow-x: hidden;
+  position: relative;
 `;

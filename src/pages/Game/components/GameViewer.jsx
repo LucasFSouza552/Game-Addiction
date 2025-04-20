@@ -1,6 +1,6 @@
-
 import styled from "styled-components";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 /**
  * Componente para visualizar informações de um jogo.
@@ -12,34 +12,51 @@ import { FaCheck, FaTimes } from "react-icons/fa";
  * @param {Array} props.game.genres - Lista de gêneros do jogo.
  */
 const GameViewer = ({ game }) => {
+    const [loading, setLoading] = useState(true);
+    const [gameData, setGameData] = useState({});
+
+    useEffect(() => {
+        setLoading(true);
+        setGameData(game);
+        setLoading(false);
+    }, [game]);
+
     return (
         <GameWrapper>
-            {game.image && <GameThumbnail src={`http://${game.image}.png`} alt={game.title} />}
-            <GameDetails>
+            {loading ? (
+                <LoadingContainer>
+                    <LoadingIcon />
+                </LoadingContainer>
+            ) : (
+                <>
+                    {gameData.image && <GameThumbnail src={`http://${gameData.image}.png`} alt={gameData.title} />}
+                    <GameDetails>
 
-                <GameTitle>{game.title}</GameTitle>
+                        <GameTitle>{gameData.title}</GameTitle>
 
-                <LabelAndDescription inline label="Desenvolvedor" description={game.developer} />
-                <LabelAndDescription inline label="Publicadora" description={game.publisher} />
-                <LabelAndDescription inline label="Plataforma" description={
-                    game.worksOn ? (
-                        <List inline>
-                            {Object.entries(game.worksOn).map(([key, value]) => (
-                                <GenresTag key={key}>{value ? <FaCheck size={20} color="green" /> : <FaTimes size={20} color="red" />} {key}</GenresTag>
-                            ))}
-                        </List>
-                    ) : null
-                } />
+                        <LabelAndDescription inline label="Desenvolvedor" description={gameData.developer} />
+                        <LabelAndDescription inline label="Publicadora" description={gameData.publisher} />
+                        <LabelAndDescription inline label="Plataforma" description={
+                            gameData.worksOn ? (
+                                <List inline>
+                                    {Object.entries(gameData.worksOn).map(([key, value]) => (
+                                        <GenresTag key={key}>{value ? <FaCheck size={20} color="green" /> : <FaTimes size={20} color="red" />} {key}</GenresTag>
+                                    ))}
+                                </List>
+                            ) : null
+                        } />
 
-                <LabelAndDescription inline label="Gêneros" description={(<List inline>{game.genres?.filter((genre) => genre).map((genre, index) => {
-                    return (
-                        <GenresTag bgColor={genre} color="black" key={genre}>{genre}</GenresTag>
-                    )
-                })}</List>)} />
+                        <LabelAndDescription inline label="Gêneros" description={(<List inline>{gameData.genres?.filter((genre) => genre).map((genre, index) => {
+                            return (
+                                <GenresTag bgColor={genre} color="black" key={genre}>{genre}</GenresTag>
+                            )
+                        })}</List>)} />
 
-                <PriceComponent game={game} />
+                        <PriceComponent game={gameData} />
 
-            </GameDetails>
+                    </GameDetails>
+                </>
+            )}
         </GameWrapper>
     )
 }
@@ -218,6 +235,32 @@ const GameThumbnail = styled.img`
     width: auto;
     height: auto;
     object-fit: contain;
+`;
+
+const LoadingContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+`;
+
+const LoadingIcon = styled.div`
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 `;
 
 export default GameViewer;

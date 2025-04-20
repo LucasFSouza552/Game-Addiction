@@ -5,14 +5,14 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 
-export default function Header({ searchTerm, setSearchTerm }) {
+export default function Header({ searchTerm, setSearchTerm, account }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <HeaderWrapper>
       <HeaderContainer>
-
+        <BigLogo src="./images/GameVault.png" alt="Logo do Site" onClick={() => navigate("/")} />
         <LogoAndMenuWrapper>
           <IconsWrapper>
             <Hamburger onClick={() => setMenuOpen(!menuOpen)} $menuOpen={menuOpen}>
@@ -20,8 +20,8 @@ export default function Header({ searchTerm, setSearchTerm }) {
               <span />
               <span />
             </Hamburger>
+            <SmallLogo src="./images/GameVaultIcon.png" alt="Logo do Site" onClick={() => navigate("/")} />
           </IconsWrapper>
-          <Logo src="#" alt="Logo do Site" onClick={() => navigate("/")} />
         </LogoAndMenuWrapper>
 
         <SearchWrapper>
@@ -48,14 +48,24 @@ export default function Header({ searchTerm, setSearchTerm }) {
               Favoritos
             </NavLink>
           </Nav>
-          <AuthLinks>
-            <AuthLink to="/login" onClick={() => setMenuOpen(false)}>
-              <FaUser /> Entrar
-            </AuthLink>
-            <AuthLink to="/register" onClick={() => setMenuOpen(false)}>
-              Criar Conta
-            </AuthLink>
-          </AuthLinks>
+          {account ? <>
+            <AuthLinks>
+              <AuthLink to="/login" onClick={() => setMenuOpen(false)}>
+                <FaUser /> Entrar
+              </AuthLink>
+              <AuthLink to="/register" onClick={() => setMenuOpen(false)}>
+                Criar Conta
+              </AuthLink>
+            </AuthLinks>
+          </> : <>
+            <ProfileIcon onClick={() => {
+              setMenuOpen(false);
+              navigate("/profile");
+            }}>
+              <FaUser />
+            </ProfileIcon>
+
+          </>}
         </GroupingInfos>
 
 
@@ -64,12 +74,33 @@ export default function Header({ searchTerm, setSearchTerm }) {
   );
 }
 
+const ProfileIcon = styled.div`
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  border: solid 1px white;
+  padding: 10px;
+  border-radius: 50%;
+
+  transition: all 0.2s ease;
+  &:hover {
+    color: #dede1c;
+    border: solid 1px  #dede1c;
+    transform: scale(1.1);
+  }
+`
+
 const LogoAndMenuWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
   gap: 10px;
+
+
+  &:first-child{
+    justify-content: flex-start;
+  }
 `;
 
 const HeaderWrapper = styled.header`
@@ -86,7 +117,6 @@ const HeaderContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
   margin: 0 auto;
   position: relative;
   flex-wrap: nowrap;
@@ -110,9 +140,22 @@ const SearchWrapper = styled.div`
   }
 `;
 
-const Logo = styled.img`
+const SmallLogo = styled.img`
+     /* width: 150px; */
   height: 40px;
   cursor: pointer;
+`
+
+const BigLogo = styled.img`
+  /* height: 40px; */
+  width: 150px;
+  /* border: solid 1px white; */
+
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const IconsWrapper = styled.div`
@@ -267,11 +310,11 @@ const AuthLink = styled(Link)`
   border-radius: 4px;
 
   &:first-child {
-    background-color: #444;
+    background-color: var(--primaryColor);
   }
 
   &:last-child {
-    background-color: #dede1c;
+    background-color: var(--secondaryColor);
     color: #222;
   }
 
@@ -298,5 +341,4 @@ const FavoriteIcon = styled(MdOutlineFavoriteBorder)`
     color: #dede1c;
     transform: scale(1.1);
   }
-
 `;

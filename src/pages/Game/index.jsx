@@ -4,15 +4,25 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import GameViewer from "./components/GameViewer";
 import GameGallery from "./components/GameGallery";
-import { IoChevronBackCircle } from "react-icons/io5";
+import { FaAngleLeft } from "react-icons/fa";
 
 
-const BackButton = styled(IoChevronBackCircle)`
+
+const BackButton = styled(FaAngleLeft)`
     position: absolute;
-    top: 100px;
+    top: 120px;
     left: 20px;
-    font-size: 2em;
+    z-index: 1000;
+    background-color: #333333;
+    border-radius: 5px;
+    border: solid 1px #ffffff;
     color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: fit-content;
+    font-size: 2em;
     cursor: pointer;
 `;
 
@@ -28,7 +38,6 @@ export default function Game() {
     const query = useQuery();
     const gametitle = query.get("title");
 
-    console.log(gametitle);
 
     useEffect(() => {
         if (!gametitle) return;

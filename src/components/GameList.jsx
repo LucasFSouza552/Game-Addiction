@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import Card from "./Card";
+import GameFilter from "./Filter";
+import { useEffect, useState } from "react";
 
-const GameList = ({ account, setAccount, search, gamesList }) => {
+const GameList = ({ account, setAccount, search, gamesList, filters, setFilters, loading }) => {
+
 
     const toggleFavorite = (e, slugGame) => {
         e.stopPropagation();
@@ -18,51 +21,69 @@ const GameList = ({ account, setAccount, search, gamesList }) => {
         });
     };
 
-    return (
-        <GameListStyle>
-            {gamesList?.filter(game => {
-                const searchRegex = new RegExp(search, 'gi');
-                return search === '' || searchRegex.test(game?.title);
-            })
-                .map((game, index) => {
-                    return (
-                        <Card
-                            game={game}
-                            key={game.id + "-" + index}
-                            isFavorite={account?.favoriteGames?.includes(`${game.title}`)}
-                            onToggleFavorite={(e) => toggleFavorite(e, game.title)}
-                            showFavoriteButton={account}
-                        />
-                    );
-                })}
-        </GameListStyle>
+    const [filtredGames, setFilteredGames] = useState(gamesList);
+    const [isLoading, setIsLoading] = useState(false);
 
+    useEffect(() => {
+        setFilteredGames(gamesList.filter(game => {
+            const searchRegex = new RegExp(search, 'gi');
+            const filterCategory = filters.category.length === 0 || filters.category.some(category => game.genres?.includes(category));
+            
+            const SystemOs = Object.keys(game.worksOn).filter(worksOn => game.worksOn[worksOn]).map((worksOn) => worksOn.toLowerCase());
+            const filterSystem = filters.system.length === 0 || filters.system.some(system => SystemOs.includes(system));
+            console.log(filters.system, SystemOs, "> ", filterSystem, filterCategory)
+            return (search === '' || searchRegex.test(game?.title)) && filterCategory && filterSystem;
+        }))
+    }, [
+        gamesList, filters, search
+    ]);
+
+    return (
+        <GameContainer>
+            {!loading && <GameFilter gamesList={gamesList} search={search} filters={filters} setFilters={setFilters} />}
+            <GameListStyle>
+                {filtredGames
+                    .map((game, index) => {
+                        return (
+                            <Card
+                                game={game}
+                                key={game.id + "-" + index}
+                                isFavorite={account?.favoriteGames?.includes(`${game.title}`)}
+                                onToggleFavorite={(e) => toggleFavorite(e, game.title)}
+                                showFavoriteButton={account}
+                            />
+                        );
+                    })}
+            </GameListStyle>
+        </GameContainer>
     );
 }
 
-
+const GameContainer = styled.section`
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    flex-direction: row;  
+    padding: 0px;
+    margin: 0px;
+`;
 
 const GameListStyle = styled.ul`
     display: grid;
     grid-template-columns: repeat(5, minmax(150px, 1fr));
-    gap: 20px 10px; /* 20px entre linhas, 2px entre colunas */
+    gap: 20px 10px;
     justify-items: center;
-    align-items: center;
+    height: min-content;
 
     width: 100%;
     margin: 50px 20px;
 
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out forwards;
 
     @media (max-width: 768px) {
         grid-template-columns: repeat(1, minmax(150px, 1fr));
         gap: 20px 10px;
     }
-    
-    /* @media (min-width: 501px) and (max-width: 768px) {
-        grid-template-columns: repeat(2, minmax(150px, 1fr));
-        gap: 20px 10px;
-    } */
     
     @media (min-width: 769px) and (max-width: 1024px) {
         gap: 20px 10px;

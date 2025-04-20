@@ -37,7 +37,7 @@ const Card = ({ game, isFavorite, onToggleFavorite, showFavoriteButton = true })
     return (
         <CardWrapper key={game.id} title={game.title} onClick={() => navigate(`/game?title=${game.title}`)}>
             <CardImage src={"http://" + game.boxImage + ".png"} alt={game.title} />
-            {onToggleFavorite && showFavoriteButton&& <FavoriteButton title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"} onClick={onToggleFavorite}>
+            {onToggleFavorite && showFavoriteButton && <FavoriteButton title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"} onClick={onToggleFavorite}>
                 < FavoriteIcon isFavorite={isFavorite} />
             </FavoriteButton>}
             <BgCardDetails>
@@ -167,7 +167,7 @@ const FavoriteButton = styled.button`
 `;
 
 const CardWrapper = styled.div`
-     display: flex;
+    display: flex;
     position: relative;
     flex-direction: column;
     align-items: flex-start;
@@ -179,41 +179,63 @@ const CardWrapper = styled.div`
     background-color: #ccc;
     height: 500px;
     cursor: pointer;
-    perspective: 1000px; /* Adiciona profundidade */
-
-    transition: transform 0.3s ease-in-out;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    transition: 
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.4s ease-out,
+        z-index 0.3s step-end;
 
     &:hover {
-        transform: rotateY(3deg) rotateX(3deg) scale(1.1);
+        transform: 
+            rotateY(5deg) 
+            rotateX(2deg) 
+            scale(1.05)
+            translateY(-8px);
         z-index: 100;
+        box-shadow: 
+            0 10px 20px rgba(0, 0, 0, 0.2),
+            0 6px 6px rgba(0, 0, 0, 0.1);
+        
+        &::before {
+            opacity: 0.8;
+        }
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 60%);
+        opacity: 0;
+        transition: opacity 0.4s ease-in-out;
+        z-index: 1;
+        pointer-events: none;
     }
 
     &:hover ${BgCardDetails} {
         transform: translateY(0%);
         opacity: 1;
+        transition: 
+            transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s,
+            opacity 0.4s ease-out 0.1s;
     }
 
-    /* &:hover ${BgCardDetails} {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        width: 100%;
-        height: 120%;
-        position: absolute;
-        top: 0%;
-        word-break: break-word;
-        white-space: pre-wrap;
-        transition: all 0.3s ease-in-out;
-    } */
+    backface-visibility: hidden;
+    will-change: transform;
 `;
 
 const CardImage = styled.img`
-     width: 100%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
 
     ${CardWrapper}:hover & {
         transform: scale(1.1);
@@ -222,11 +244,38 @@ const CardImage = styled.img`
     &[src] {
         opacity: 1;
         content-visibility: auto;
+        transition: transform 0.5s ease-in-out, opacity 0.3s ease-in-out;
     }
 
     &[src=""] {
         opacity: 0;
         content-visibility: hidden;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+        z-index: 1;
+    }
+
+    &[src]::before {
+        display: none;
+    }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -200% 0;
+        }
+        100% {
+            background-position: 200% 0;
+        }
     }
 `;
 
