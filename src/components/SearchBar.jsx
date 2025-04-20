@@ -138,7 +138,7 @@ const SearchButton = styled.button`
 
   &:hover {
     background-color: #DEDE1C;
-    color: #222;
+    color: var(--bgColor);
   }
 `;
 

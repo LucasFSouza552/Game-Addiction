@@ -1,20 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function Login() {
+export default function Login({ Accounts, setAccount }) {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const navigate = useNavigate();
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const account = Accounts.find(acc => acc.email === email && acc.senha === senha);
+    if (account) {
+      localStorage.setItem('account', JSON.stringify(account));
+      window.location.href = '/';
+    } else {
+      console.error('Invalid email or password');
+    }
+  }
+
   return (
     <LoginContainer>
       <LoginBox>
         <h2>Entrar</h2>
 
-        <label htmlFor="email">E-mail</label>
-        <Input type="email" id="email" placeholder="Digite seu e-mail" />
+        <FormContainer onSubmit={handleLogin}>
+          <label htmlFor="email">E-mail</label>
+          <Input type="email" id="email" placeholder="Digite seu e-mail" value={email} onChange={e => setEmail(e.target.value)} />
 
-        <label htmlFor="senha">Senha</label>
-        <Input type="password" id="senha" placeholder="Digite sua senha" />
+          <label htmlFor="senha">Senha</label>
+          <Input type="password" id="senha" placeholder="Digite sua senha" value={senha} onChange={e => setSenha(e.target.value)} />
 
-        <Button>Entrar</Button>
+          <Button>Entrar</Button>
+        </FormContainer>
 
         <RegisterText>
           Não tem uma conta? <Link to="/register">Cadastre-se</Link>
@@ -23,6 +41,11 @@ export default function Login() {
     </LoginContainer>
   );
 }
+
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+`
 
 const LoginContainer = styled.div`
   font-family: "Satoshi-Bold";

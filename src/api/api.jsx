@@ -196,31 +196,3 @@ export const searchFavoriteGames = async (favorites) => {
 
   return results;
 };
-
-export const getAvailableGenres = async () => {
-  try {
-    const { data } = await api.get("", {
-      params: {
-        mediaType: "game",
-        page: 1,
-        pageSize: 4
-      }
-    });
-
-    const genres = data.products.reduce((acc, game) => {
-      game.genres.map(genre => {
-        if (!acc.includes(genre) && genre) {
-          acc.push(genre);
-        }
-      });
-      return acc;
-    }, []);
-    console.log(genres)
-    return genres;
-  } catch (error) {
-    console.error("Erro ao buscar gêneros:", error);
-    return [];
-  }
-};
-
-getAvailableGenres()

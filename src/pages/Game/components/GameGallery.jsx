@@ -45,7 +45,6 @@ const GameGallery = ({ game, picture, setPicture }) => {
         const videoId = getYouTubeVideoID(`https://www.youtube.com/watch?v=${game.video?.id}`);
         setVideoId(videoId);
     }, [game.video])
-    console.log(game);
     return (
         <GalleryWrapper id="galeria">
             {game.video &&

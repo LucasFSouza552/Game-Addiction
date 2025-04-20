@@ -3,8 +3,9 @@ import Card from "./Card";
 import GameFilter from "./Filter";
 import { useEffect, useState } from "react";
 
-const GameList = ({ account, setAccount, search, gamesList, filters, setFilters, loading }) => {
+const GameList = ({ account, setAccount, search, gamesList, filters, updateFilters, loading }) => {
 
+    const [filtredGames, setFilteredGames] = useState(gamesList);
 
     const toggleFavorite = (e, slugGame) => {
         e.stopPropagation();
@@ -21,17 +22,16 @@ const GameList = ({ account, setAccount, search, gamesList, filters, setFilters,
         });
     };
 
-    const [filtredGames, setFilteredGames] = useState(gamesList);
-    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        if(!filters || filters?.length === 0) return;
         setFilteredGames(gamesList.filter(game => {
             const searchRegex = new RegExp(search, 'gi');
             const filterCategory = filters.category.length === 0 || filters.category.some(category => game.genres?.includes(category));
             
             const SystemOs = Object.keys(game.worksOn).filter(worksOn => game.worksOn[worksOn]).map((worksOn) => worksOn.toLowerCase());
             const filterSystem = filters.system.length === 0 || filters.system.some(system => SystemOs.includes(system));
-            console.log(filters.system, SystemOs, "> ", filterSystem, filterCategory)
+
             return (search === '' || searchRegex.test(game?.title)) && filterCategory && filterSystem;
         }))
     }, [
@@ -40,7 +40,7 @@ const GameList = ({ account, setAccount, search, gamesList, filters, setFilters,
 
     return (
         <GameContainer>
-            {!loading && <GameFilter gamesList={gamesList} search={search} filters={filters} setFilters={setFilters} />}
+            {!loading && <GameFilter filters={filters} updateFilters={updateFilters} />}
             <GameListStyle>
                 {filtredGames
                     .map((game, index) => {
@@ -50,7 +50,7 @@ const GameList = ({ account, setAccount, search, gamesList, filters, setFilters,
                                 key={game.id + "-" + index}
                                 isFavorite={account?.favoriteGames?.includes(`${game.title}`)}
                                 onToggleFavorite={(e) => toggleFavorite(e, game.title)}
-                                showFavoriteButton={account}
+                                showFavoriteButton={account !== null}
                             />
                         );
                     })}

@@ -6,11 +6,18 @@ import styled from "styled-components";
 export default function GameFilter({ filters, setFilters }) {
     const [openFilter, setOpenFilter] = useState(false);
 
+    if (!filters) {
+        return null;
+    }
+
+
     const openFilterHandler = () => {
         setOpenFilter(!openFilter);
     };
 
-    const handleFilterChange = (key, value) =>
+    const handleFilterChange = (key, value) => {
+
+        if (!filters) return;
         setFilters((prevFilters) => {
             const prevFilterValues = prevFilters[key] || [];
             const newFilterValues = prevFilterValues.includes(value)
@@ -19,7 +26,7 @@ export default function GameFilter({ filters, setFilters }) {
 
             return { ...prevFilters, [key]: newFilterValues };
         });
-
+    }
     return (
         <>
             <FilterToggleButton onClick={openFilterHandler} openFilter={openFilter}>
@@ -37,7 +44,7 @@ export default function GameFilter({ filters, setFilters }) {
                         <FilterItem
                             key={value}
                             value={value}
-                            checked={filters["category"]?.includes(value)}
+                            checked={filters && filters.category?.includes(value)}
                             onClick={() => handleFilterChange("category", value)}
                         >
                             {key}
@@ -78,7 +85,6 @@ export default function GameFilter({ filters, setFilters }) {
 }
 
 const GameFilterContainer = styled.div`
-     --filter-bg: #222222;
     --text-color: #ffffff;
     --border-radius: 8px;
     --transition-time: 0.3s;
@@ -87,7 +93,7 @@ const GameFilterContainer = styled.div`
     position: relative;
     left: 0;
     z-index: 1000;
-    background-color: var(--filter-bg);
+    background-color: var(--bgColor);
     color: var(--text-color);
     font-size: 1rem;
     width: 280px;
@@ -130,8 +136,9 @@ const FilterToggleButton = styled.div`
     justify-content: center;
     width: 50px;
     height: 50px;
-    background-color: var(--filter-bg);
-    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    color:white;
+    background-color: var(--bgColor);
+    border-radius: 0px 0px 10px 0px;
     cursor: pointer;
     transition: background-color var(--transition-time);
     position: absolute;

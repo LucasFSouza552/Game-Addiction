@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
@@ -13,28 +13,26 @@ export default function Header({ searchTerm, setSearchTerm, account }) {
     <HeaderWrapper>
       <HeaderContainer>
         <BigLogo src="./images/GameVault.png" alt="Logo do Site" onClick={() => navigate("/")} />
-        <LogoAndMenuWrapper>
-          <IconsWrapper>
-            <Hamburger onClick={() => setMenuOpen(!menuOpen)} $menuOpen={menuOpen}>
-              <span />
-              <span />
-              <span />
-            </Hamburger>
-            <SmallLogo src="./images/GameVaultIcon.png" alt="Logo do Site" onClick={() => navigate("/")} />
-          </IconsWrapper>
-        </LogoAndMenuWrapper>
+        <IconsWrapper>
+          <Hamburger onClick={() => setMenuOpen(!menuOpen)} $menuOpen={menuOpen}>
+            <span />
+            <span />
+            <span />
+          </Hamburger>
+          <SmallLogo src="./images/GameVaultIcon.png" alt="Logo do Site" onClick={() => navigate("/")} />
+        </IconsWrapper>
 
         <SearchWrapper>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </SearchWrapper>
 
         <IconsWrapper>
-          <FavoriteIcon
+          {account && <FavoriteIcon
             onClick={() => {
               setMenuOpen(false);
               navigate("/favorites");
             }}
-          />
+          />}
 
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} isMobileView />
         </IconsWrapper>
@@ -44,11 +42,11 @@ export default function Header({ searchTerm, setSearchTerm, account }) {
             <NavLink to="/" onClick={() => setMenuOpen(false)}>
               Início
             </NavLink>
-            <NavLink to="/favorites" onClick={() => setMenuOpen(false)}>
+            {account && <NavLink to="/favorites" onClick={() => setMenuOpen(false)}>
               Favoritos
-            </NavLink>
+            </NavLink>}
           </Nav>
-          {account ? <>
+          {!account ? (<>
             <AuthLinks>
               <AuthLink to="/login" onClick={() => setMenuOpen(false)}>
                 <FaUser /> Entrar
@@ -57,7 +55,7 @@ export default function Header({ searchTerm, setSearchTerm, account }) {
                 Criar Conta
               </AuthLink>
             </AuthLinks>
-          </> : <>
+          </>) : (<>
             <ProfileIcon onClick={() => {
               setMenuOpen(false);
               navigate("/profile");
@@ -65,7 +63,7 @@ export default function Header({ searchTerm, setSearchTerm, account }) {
               <FaUser />
             </ProfileIcon>
 
-          </>}
+          </>)}
         </GroupingInfos>
 
 
@@ -315,7 +313,7 @@ const AuthLink = styled(Link)`
 
   &:last-child {
     background-color: var(--secondaryColor);
-    color: #222;
+    color: var(--bgColor);
   }
 
   &:hover {

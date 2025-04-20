@@ -3,7 +3,7 @@ import { searchFavoriteGames, searchGames } from "../../api/api";
 import GameList from "../../components/GameList";
 import styled from "styled-components";
 
-export default function Favorites({ account, setAccount, gameList, search }) {
+export default function Favorites({ account, setAccount }) {
 
     const [GameListFavorites, setGameListFavorites] = useState([]);
     const [isLoading, setIsLoading] = useState(true);

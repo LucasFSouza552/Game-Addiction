@@ -6,10 +6,13 @@ import { FaChevronUp } from "react-icons/fa";
 
 
 export default function Home({ account, setAccount, search, gamesList, setGamesList }) {
-  const [filters, setFilters] = useState({
+  
+  const [filters, setFilters] = useState(() => ({
     category: [],
     system: [],
-  });
+  }));
+
+
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,7 +27,7 @@ export default function Home({ account, setAccount, search, gamesList, setGamesL
         onlyGames: true,
         mediaType: "game",
         price: "discounted",
-        search: search
+        search: search,
       }
 
       if (search) {
@@ -66,7 +69,7 @@ export default function Home({ account, setAccount, search, gamesList, setGamesL
 
   return (
     <HomePage>
-      {<GameList account={account} setAccount={setAccount} search={search} gamesList={gamesList} filters={filters} setFilters={setFilters} loading={isLoading} />}
+      {<GameList account={account} setAccount={setAccount} search={search} gamesList={gamesList} filters={filters} updateFilters={setFilters} loading={isLoading} />}
       {!isOnTop && <BackTop  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >
         <FaChevronUp/>
       </BackTop>}

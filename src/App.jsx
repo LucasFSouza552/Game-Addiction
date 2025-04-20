@@ -16,39 +16,60 @@ import Footer from './components/Footer'
 import Favorites from './pages/Favorites'
 import Game from './pages/Game'
 
-const Accounts = [
-  {
-    username: "Teste",
-    senha: "123456",
-    email: "teste@gmail.com",
-    gender: "Masculino",
-    bornDate: "01/01/2000",
-    favoriteGames: []
-  }
-]
-
 function App() {
+
+  const [Accounts, setAccounts] = useState(() => {
+    return [
+      {
+        username: "Teste1",
+        senha: "123456",
+        email: "teste1@gmail.com",
+        gender: "Masculino",
+        bornDate: "01/01/2000",
+        favoriteGames: []
+      },
+      {
+        username: "Teste2",
+        senha: "abcdef",
+        email: "teste2@gmail.com",
+        gender: "Feminino",
+        bornDate: "02/02/2001",
+        favoriteGames: []
+      },
+      {
+        username: "Teste3",
+        senha: "password",
+        email: "teste3@gmail.com",
+        gender: "Outro",
+        bornDate: "03/03/2002",
+        favoriteGames: []
+      }
+    ];
+  });
+
   const [searchTerm, setSearchTerm] = useState('');
   const [gamesList, setGamesList] = useState([]);
   const [account, setAccount] = useState(() => {
     const localAccount = localStorage.getItem('account');
-    return localAccount ? JSON.parse(localAccount) : {
-      username: "Teste",
-      email: "teste@gmail.com",
-      gender: "Masculino",
-      bornDate: "01/01/2000",
-      favoriteGames: []
-    };
+    return localAccount ? JSON.parse(localAccount) : null;
   });
 
   useEffect(() => {
-    localStorage.setItem('account', JSON.stringify(account));
+    if (!account) return;
+
+    const existingAccount = Accounts.find(acc => acc.username === account?.username && acc.senha === account?.senha);
+    if (existingAccount) {
+      localStorage.setItem('account', JSON.stringify(account));
+    } else {
+      localStorage.removeItem('account');
+    }
+
   }, [account]);
 
   return (
     <Background>
       <BrowserRouter>
-        <Header setSearchTerm={setSearchTerm} searchTerm={searchTerm} />
+        <Header setSearchTerm={setSearchTerm} searchTerm={searchTerm} account={account} />
         <Routes>
           <Route
             path="/"
@@ -56,11 +77,11 @@ function App() {
           />
           <Route
             path="/login"
-            element={<Login setAccount={setAccount} />}
+            element={<Login setAccount={setAccount} Accounts={Accounts} />}
           />
           <Route
             path="/register"
-            element={<Register />}
+            element={<Register setAccounts={setAccounts} setAccount={setAccount} Accounts={Accounts} />}
           />
           <Route
             path="/dashboard"
@@ -68,11 +89,11 @@ function App() {
           />
           <Route
             path="/favorites"
-            element={<Favorites account={account} setAccount={setAccount} gameList={gamesList} search={searchTerm} />}
+            element={account ? <Favorites account={account} setAccount={setAccount} gameList={gamesList} search={searchTerm} /> : <Navigate to="/login" replace />}
           />
           <Route
             path="/profile"
-            element={<Profile account={account} setAccount={setAccount} />}
+            element={account ? <Profile account={account} setAccount={setAccount} /> : <Navigate to="/login" replace />}
           />
           <Route
             path="/game"

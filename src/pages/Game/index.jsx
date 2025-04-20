@@ -45,7 +45,6 @@ export default function Game() {
         const searchGame = async () => {
             try {
                 const foundGames = await searchByTitle(gametitle);
-                console.log(foundGames)
                 if (foundGames) {
                     setGame(foundGames);
                 } else {

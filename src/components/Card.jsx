@@ -30,7 +30,7 @@ const FavoriteIcon = styled(MdOutlineFavorite)`
     `}
 `;
 
-const Card = ({ game, isFavorite, onToggleFavorite, showFavoriteButton = true }) => {
+const Card = ({ game, isFavorite, onToggleFavorite, showFavoriteButton = false }) => {
     const navigate = useNavigate();
     if (!game) return null;
 
